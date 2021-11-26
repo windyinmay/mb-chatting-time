@@ -2,29 +2,35 @@ import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import io from "socket.io-client";
 
-export default function App() {
+export default function HomeScreen() {
   const [msgToSend, setMsgToSend] = useState("");
-  const [recvMsg, setRecvMsg] = useState([]);
+  const [recMsg, setRecMsg] = useState([]);
   const socket = useRef(null);
 
   useEffect(() => {
+    //find the local address by ifconfig
     socket.current = io("http://192.168.0.101:3030");
     console.log("Applying effect .....");
-    socket.current.on("message", (message) => {
-      setRecvMsg((prevState) => [...prevState, message]);
+    //set up the listener
+    //"" and variable are the same
+    socket.current.on("msg", (msg) => {
+      //one sending hello, hello abc = prevState, then new msg = hello xyz is pushed to the array
+      setRecMsg((prevState) => [...prevState, msg]);
     });
   }, []);
 
   const sendMsg = () => {
+    //client side
+    //eventEmitter which means emit events on one side and register listeners on the other
     socket.current.emit("message", msgToSend);
     setMsgToSend("");
   };
 
-  const textOfRecvMsg = recvMsg.map((msg) => <Text key={msg}>{msg}</Text>);
+  const textOfRecMsg = recMsg.map((msg) => <Text key={msg}>{msg}</Text>);
   return (
     <View style={styles.container}>
-      <Text>Welcome to my App!</Text>
-      <Text>{textOfRecvMsg}</Text>
+      <Text>It is Chatting Time! Start testing from here with 2 phones.</Text>
+      <Text>{textOfRecMsg}</Text>
       <TextInput
         value={msgToSend}
         onChangeText={(txt) => setMsgToSend(txt)}
@@ -35,7 +41,7 @@ export default function App() {
       */
         backgroundColor="white"
         onSubmitEditing={sendMsg}
-        placeholder="Enter chat msg.."
+        placeholder="Let's chat..."
       />
     </View>
   );
