@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { GiftedChat } from "react-native-gifted-chat";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import io from "socket.io-client";
 
@@ -17,8 +18,20 @@ export default function HomeScreen() {
       //one sending hello, hello abc = prevState, then new msg = hello xyz is pushed to the array
       setRecMsg((prevState) => [...prevState, msg]);
     });
+    setRecMsg([
+      {
+        _id: 1,
+        text: "Hello developer",
+        createdAt: new Date(),
+        user: {
+          _id: 2,
+          name: "React Native",
+          avatar: "https://placeimg.com/140/140/any",
+        },
+      },
+    ]);
   }, []);
-
+  /*<Text>{textOfRecMsg}</Text>*/
   const sendMsg = () => {
     //client side
     //eventEmitter which means emit events on one side and register listeners on the other
@@ -26,23 +39,18 @@ export default function HomeScreen() {
     setMsgToSend("");
   };
 
-  const textOfRecMsg = recMsg.map((msg) => <Text key={msg}>{msg}</Text>);
   return (
-    <View style={styles.container}>
-      <Text>It is Chatting Time! Start testing from here with 2 phones.</Text>
-      <Text>{textOfRecMsg}</Text>
-      <TextInput
-        value={msgToSend}
-        onChangeText={(txt) => setMsgToSend(txt)}
-        /*other way to express arrow function: 
-        onChangeText = {function (text) {
-        setMsgToSend(text)
-      }}
-      */
-        backgroundColor="white"
-        onSubmitEditing={sendMsg}
-        placeholder="Let's chat..."
+    <View style={{ flex: 1 }}>
+      <GiftedChat
+        messages={recMsg}
+        // onSend={(messages) => onSend(messages)}
+        user={{
+          _id: 1,
+        }}
       />
+       {
+      Platform.OS === 'android' && <KeyboardAvoidingView behavior="padding" />
+   }
     </View>
   );
 }
