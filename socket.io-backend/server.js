@@ -13,7 +13,7 @@ function memberProfilePicUrl() {
 }
 //server side
 io.on("connection", (socket) => {
-  //ask for support
+  //ask for support => 28 Nov done
   console.log("a socket connected!");
   console.log(socket.id);
   members[socket.id] = { memberId: currentMemberId++ };
