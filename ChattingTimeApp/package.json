@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-navigation/native": "^6.0.6",
     "expo": "~42.0.1",
     "expo-status-bar": "~1.0.4",
     "react": "16.13.1",
@@ -15,6 +16,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-gifted-chat": "^0.16.3",
     "react-native-web": "~0.13.12",
+    "react-navigation": "^4.4.4",
     "socket.io-client": "^4.4.0"
   },
   "devDependencies": {
