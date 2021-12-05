@@ -7,9 +7,12 @@ import {
   Image,
   KeyboardAvoidingView,
 } from "react-native";
+import { useDispatch } from "react-redux";
 
-export default function SignIn({ joinToChat }) {
-  const [username, setUserName] = useState("");
+export default function JoinScreen({ navigation }) {
+  const dispatch = useDispatch();
+  const [username, setUsername] = useState("");
+
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Image
@@ -19,14 +22,23 @@ export default function SignIn({ joinToChat }) {
       />
       <View style={{ flex: 1, justifyContent: "space-around" }}>
         <TextInput
-          onChangeText={(txt) => setUserName(txt)}
+          onChangeText={(text) => setUsername(text)}
           value={username}
-          style={{ fontSize: 20, textAlign: "center" }}
+          style={{ fontSize: 25, textAlign: "center" }}
           placeholder="Enter username"
         />
-        <Button title="Join to chat" onPress={() => joinToChat(username)} />
+        <Button
+          title="Join To Chat"
+          //react-native way: => joinToChat(username)
+          onPress={() => {
+            dispatch({ type: "server/join", data: username });
+            navigation.navigate("App");
+            //app in container
+          }}
+        />
       </View>
-      {Platform.OS === "android" && <KeyboardAvoidingView behavior="padding" />}
+      {Platform.OS === "ios" && <KeyboardAvoidingView behavior="padding" />}
+      <KeyboardAvoidingView behavior="padding" />
     </View>
   );
 }

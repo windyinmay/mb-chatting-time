@@ -52,20 +52,17 @@ export default function HomeScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-      {newbie ? (
-        <GiftedChat
-          renderUsernameOnMessage
-          messages={recMsg}
-          onSend={(messages) => onSend(messages)}
-          user={{
-            _id: 1,
-          }}
-        />
-      ) : (
-        <SignIn joinToChat={joinToChat} />
-      )}
+      <GiftedChat
+        renderUsernameOnMessage
+        messages={recMsg}
+        onSend={(messages) => onSend(messages)}
+        user={{
+          _id: 1,
+        }}
+      />
 
       {Platform.OS === "android" && <KeyboardAvoidingView behavior="padding" />}
+      <KeyboardAvoidingView behavior="padding" />
     </View>
     //since the keyboard hide the chat screen=> need keyboard avoiding fro android
   );

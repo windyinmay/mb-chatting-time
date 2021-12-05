@@ -18,13 +18,26 @@ io.on("connection", (socket) => {
   console.log(socket.id);
   members[socket.id] = { memberId: currentMemberId++ };
   socket.on("newbie", (username) => {
+    //with memberIds => dont need to become a newbie to send mess
+    //messageHandler.handleMsg(socket, memberIds);
+    //required to create a username to chat
     members[socket.id].username = username;
     members[socket.id].avatar = memberProfilePicUrl();
+    messageHandler.handleMsg(socket, members);
   });
-  //with memberIds => dont need to become a newbie to send mess
-  //messageHandler.handleMsg(socket, memberIds);
-  //required to create a username to chat
-  messageHandler.handleMsg(socket, members);
+  socket.on("action", (action) => {
+    switch (action.type) {
+      case "server/index":
+        console.log("Got hello event", action.data);
+        socket.emit("action", { type: "message", data: "Demonstration date!" });
+        break;
+      case "server/join":
+        console.log("Got join event", action.data);
+        users[socket.id].username = action.data;
+        members[socket.id].avatar = memberProfilePicUrl();
+        break;
+    }
+  });
 });
 
 io.listen(3030);
