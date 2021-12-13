@@ -6,7 +6,7 @@ function createMsg(member, messageText) {
     text: messageText,
     createdAt: new Date(),
     user: {
-      _id: member.memberIds,
+      _id: member.memberId,
       name: member.username,
       avatar: member.avatar,
     },

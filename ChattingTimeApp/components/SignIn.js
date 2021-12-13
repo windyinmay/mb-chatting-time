@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import {
   View,
-  Button,
-  Platform,
   TextInput,
   Image,
+  Button,
+  Platform,
   KeyboardAvoidingView,
 } from "react-native";
 import { useDispatch } from "react-redux";
@@ -22,7 +22,7 @@ export default function JoinScreen({ navigation }) {
       />
       <View style={{ flex: 1, justifyContent: "space-around" }}>
         <TextInput
-          onChangeText={(text) => setUsername(text)}
+          onChangeText={(txt) => setUsername(txt)}
           value={username}
           style={{ fontSize: 25, textAlign: "center" }}
           placeholder="Enter username"
