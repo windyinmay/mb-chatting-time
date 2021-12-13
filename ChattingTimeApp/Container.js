@@ -1,10 +1,13 @@
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import Contacts from "./components/Contacts";
-import HomeScreen from "./components/HomeScreen";
 import SignIn from "./components/SignIn";
+import Chatting from "./components/Chatting";
 
-const AppStack = createStackNavigator({ ChattingTime: Contacts });
+const AppStack = createStackNavigator({
+  OnlineFriends: Contacts,
+  ChattingTime: Chatting,
+});
 
 export default createAppContainer(
   createSwitchNavigator(
